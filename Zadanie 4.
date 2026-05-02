@@ -1,0 +1,44 @@
+const hasLaptop = true;
+const hasCharger = false;
+const hasNotebook = true;
+const dayType = "laboratorium";
+
+// dodatkowa własna cecha
+const hasMouse = false;
+
+// 1. Sprawdzenie gotowości (if...else)
+let isReady;
+
+if (hasLaptop && hasNotebook) {
+  isReady = true;
+} else {
+  isReady = false;
+}
+
+console.log("Czy student jest gotowy:", isReady);
+
+// 2. Komunikat zależny od typu dnia
+if (dayType === "laboratorium") {
+  console.log("Dziś laboratorium – sprawdź przygotowanie sprzętu i oprogramowania.");
+} else if (dayType === "wykład") {
+  console.log("Dziś wykład – wystarczy notatnik i długopis.");
+} else {
+  console.log("Nieznany typ dnia.");
+}
+
+// 3. Krótki komunikat (operator trójargumentowy)
+const statusMessage = isReady ? "gotowy" : "niegotowy";
+console.log("Status:", statusMessage);
+
+// 4. Ostrzeżenia (operator &&)
+hasCharger || console.log(" Brak ładowarki – ryzyko rozładowania laptopa!");
+!hasMouse && console.log(" Brak myszki, wolniejsza praca za pomocą touchpada!");
+
+
+
+/*
+Komentarz:
+- Działa logika decyzyjna oparta o if/else, operator trójargumentowy i &&.
+- Dodałem własną cechę: hasStudentCard, żeby rozszerzyć warunki ostrzeżeń.
+- Najtrudniejsze było sensowne połączenie operatora && do komunikatów bez psucia czytelności kodu.
+*/
