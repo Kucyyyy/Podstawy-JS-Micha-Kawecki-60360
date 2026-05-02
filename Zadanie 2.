@@ -1,4 +1,4 @@
-// Dane wejściowe (nie modyfikujemy oryginalnej tablicy)
+// Dane wejściowe
 const weeklyExpenses = [18.5, 42, 9.99, 27, 61.3, 15, 33.5];
 
 // 1. Suma wydatków (reduce)
