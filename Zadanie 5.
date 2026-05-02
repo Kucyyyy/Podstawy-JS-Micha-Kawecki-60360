@@ -1,0 +1,46 @@
+const defaultTasks = ['zajęcia', 'zakupy', 'trening'];
+
+function createDayPlan(name, tasks) {
+  const finalTasks =
+    tasks && tasks.length > 0 ? tasks : ['brak zaplanowanych zadań'];
+
+  const numberedTasks = finalTasks.map(
+    (task, index) => `${index + 1}. ${task}`,
+  );
+
+  return `
+Plan dnia dla: ${name}
+Liczba zadań: ${finalTasks.length}
+
+Zadania:
+${numberedTasks.join('\n')}
+  `;
+}
+
+// 👉 INPUT
+const userName = prompt('Podaj imię:');
+
+const userTasksInput = prompt(
+  'Podaj zadania oddzielone przecinkiem (lub zostaw puste):',
+);
+
+// 👉 POPRAWIONE: brak domyślnych 3 zadań
+let userTasks = null;
+
+if (userTasksInput && userTasksInput.trim() !== '') {
+  userTasks = userTasksInput
+    .split(',')
+    .map((t) => t.trim())
+    .filter((t) => t !== '');
+}
+
+// 👉 WYWOŁANIE
+console.log(createDayPlan(userName, userTasks));
+
+console.log(createDayPlan('Ania', ['czytanie', 'siłownia', 'trening']));
+
+/*
+Komentarz:
+- Dodałem funkcję pomocniczą formatTasks(), która numeruje zadania.
+- Najtrudniejsze było sensowne zabezpieczenie przypadku pustej tablicy, żeby nie psuć czytelności planu.
+*/
