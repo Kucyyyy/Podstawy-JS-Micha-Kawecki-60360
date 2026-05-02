@@ -1,0 +1,30 @@
+// Dane wejściowe (nie modyfikujemy oryginalnej tablicy)
+const weeklyExpenses = [18.5, 42, 9.99, 27, 61.3, 15, 33.5];
+
+// 1. Suma wydatków (reduce)
+const totalSpent = weeklyExpenses.reduce((sum, value) => sum + value, 0);
+
+// 2. Średni wydatek
+const averageSpent = totalSpent / weeklyExpenses.length;
+
+// 3. Największy wydatek
+const highestExpense = Math.max(...weeklyExpenses);
+
+// 4. Dodatkowa funkcja (rozszerzenie własne)
+const classifyExpense = (value) => {
+  if (value >= 50) return "wysoki wydatek";
+  if (value >= 20) return "średni wydatek";
+  return "niski wydatek";
+};
+
+// 5. Raport końcowy
+console.log("=== RAPORT BUDŻETU ===");
+console.log(`Suma wydatków: ${totalSpent.toFixed(2)} zł`);
+console.log(`Średni wydatek: ${averageSpent.toFixed(2)} zł`);
+console.log(`Największy wydatek: ${highestExpense} zł`);
+console.log(`Klasyfikacja największego wydatku: ${classifyExpense(highestExpense)}`);
+
+// --- Komentarz ---
+// Co działa: poprawne obliczenia sumy (reduce), średniej i maksimum, raport w konsoli
+// Rozszerzenie własne: dodana funkcja klasyfikująca wydatki (niski/średni/wysoki)
+// Największa trudność: poprawne użycie reduce i Math.max w jednym raporcie
