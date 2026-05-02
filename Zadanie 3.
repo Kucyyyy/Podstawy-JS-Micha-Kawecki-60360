@@ -1,0 +1,36 @@
+const shoppingList = [
+  { name: "chleb", quantity: 2, urgent: true, category: "pieczywo" },
+  { name: "mleko", quantity: 1, urgent: false, category: "nabial" },
+  { name: "jajka", quantity: 10, urgent: true, category: "nabial" },
+  { name: "makaron", quantity: 3, urgent: false, category: "suche" }
+];
+
+// 1. Krótka lista tekstowa wszystkich produktów
+const shortList = shoppingList.map(item => {
+  return `${item.name} (x${item.quantity}) - ${item.urgent ? "PILNE" : "normalne"}`;
+});
+
+console.log("Pełna lista zakupów:");
+shortList.forEach(line => console.log(line));
+
+// 2. Filtrowanie tylko pilnych produktów
+const urgentItems = shoppingList.filter(item => item.urgent === true);
+
+// 3. Nowa tablica nazw w wielkich literach
+const upperNames = shoppingList.map(item => item.name.toUpperCase());
+
+// 4. Wyniki końcowe
+console.log("\nProdukty pilne:");
+console.log(urgentItems);
+
+console.log("\nLiczba produktów pilnych:", urgentItems.length);
+
+console.log("\nNazwy produktów:");
+console.log(upperNames);
+
+/*
+Komentarz:
+- Działa filtrowanie produktów pilnych przez filter() oraz transformacja nazw przez map().
+- Rozszerzyłem dane o pole "category", żeby pokazać dodatkową strukturę obiektu.
+- Najbardziej problematyczne było zachowanie czytelności przy kilku map/filter jednocześnie — rozdzieliłem logikę na etapy.
+*/
