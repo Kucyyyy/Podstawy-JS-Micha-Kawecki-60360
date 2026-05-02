@@ -1,0 +1,60 @@
+const repairs = [
+  { id: 1, 
+    client: "Anna", 
+    device: "laptop", 
+    status: "nowe", 
+    priority: "high"
+  },
+  {
+    id: 2,
+    client: "Piotr",
+    device: "telefon",
+    status: "w trakcie",
+    priority: "medium",
+  },
+  {
+    id: 3,
+    client: "Ola",
+    device: "tablet",
+    status: "zakończone",
+    priority: "low",
+  },
+];
+
+//  dane wejściowe zmiany
+const targetId = 2;
+const newStatus = "zakończone";
+
+// 1. find() – wyszukanie elementu
+const repairToChange = repairs.find((item) => item.id === targetId);
+
+console.log("Znalezione zgłoszenie:");
+console.log(repairToChange);
+
+// 2. niemutowalna aktualizacja (map + spread)
+const updatedRepairs = repairs.map((item) => {
+  return item.id === targetId ? { ...item, status: newStatus } : item;
+});
+
+// 3. liczba zgłoszeń "w trakcie"
+const inProgressCount = repairs.filter(
+  (item) => item.status === "w trakcie",
+).length;
+
+// 4. raport
+console.log("\n=== ORYGINALNA TABLICA ===");
+console.log(repairs);
+
+console.log("\n=== ZAKTUALIZOWANA TABLICA ===");
+console.log(updatedRepairs);
+
+console.log("\nLiczba zgłoszeń 'w trakcie':", inProgressCount);
+
+/*
+Komentarz:
+- Użyto find() do znalezienia konkretnego zgłoszenia po id.
+- Aktualizacja odbywa się niemutowalnie przez map() + spread (...item).
+- Oryginalna tablica pozostaje bez zmian.
+- Dodana własna cecha: priority (priorytet zgłoszenia).
+- Najtrudniejsze było dopilnowanie, żeby nie zmodyfikować oryginalnych obiektów w pamięci.
+*/
