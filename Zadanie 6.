@@ -1,0 +1,67 @@
+const movies = [
+  {
+    title: 'Arrival',
+    category: 'sci-fi',
+    rating: 8.1,
+    watched: true,
+    year: 2016,
+  },
+  {
+    title: 'Whiplash',
+    category: 'drama',
+    rating: 8.5,
+    watched: false,
+    year: 2014,
+  },
+  {
+    title: 'Dune',
+    category: 'sci-fi',
+    rating: 8.0,
+    watched: false,
+    year: 2021,
+  },
+  {
+    title: 'Inside Out',
+    category: 'animation',
+    rating: 8.1,
+    watched: true,
+    year: 2015,
+  },
+];
+
+// funkcja pomocnicza (rozszerzenie)
+function getTitles(list) {
+  return list.map((movie) => movie.title);
+}
+
+// 1. Filmy nieobejrzane
+const notWatchedMovies = movies.filter((movie) => !movie.watched);
+
+// 2. Filmy z oceną > 8.0
+const highRatedMovies = movies.filter((movie) => movie.rating > 8.0);
+
+// 3. Tytuły z wybranego zbioru (np. wysokie oceny)
+const highRatedTitles = getTitles(highRatedMovies);
+
+// 4. Raport
+console.log('=== RAPORT FILMÓW ===');
+
+console.log('\nNieobejrzane filmy:');
+console.log(getTitles(notWatchedMovies));
+
+console.log('\nFilmy z oceną > 8.0:');
+console.log(highRatedTitles);
+
+console.log('\nSzczegóły (nieobejrzane):');
+console.log(notWatchedMovies);
+
+console.log('\nSzczegóły (wysoko ocenione):');
+console.log(highRatedMovies);
+
+/*
+Komentarz:
+- Użyto dwóch filtrów: watched oraz rating > 8.0.
+- Użyto map() do wyciągnięcia samych tytułów.
+- Dodana własna cecha danych: year (rok produkcji).
+- Najtrudniejsze było utrzymanie czytelności raportu przy kilku zbiorach danych jednocześnie.
+*/
