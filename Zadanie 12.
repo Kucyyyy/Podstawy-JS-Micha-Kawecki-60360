@@ -1,0 +1,73 @@
+const contacts = [
+  {
+    name: 'Anna Nowak',
+    phone: '500-100-200',
+    city: 'Katowice',
+    favorite: true,
+    email: 'anna@email.com',
+  },
+  {
+    name: 'Piotr Lis',
+    phone: '501-300-700',
+    city: 'Sosnowiec',
+    favorite: false,
+    email: 'piotr@email.com',
+  },
+  {
+    name: 'Ola Marek',
+    phone: '502-400-900',
+    city: 'Katowice',
+    favorite: true,
+    email: 'ola@email.com',
+  },
+];
+
+// 1. Kontakty z wybranego miasta
+function getContactsByCity(contactList, cityName) {
+  return contactList.filter((contact) => contact.city === cityName);
+}
+
+// 2. Kontakty ulubione
+function getFavoriteContacts(contactList) {
+  return contactList.filter((contact) => contact.favorite);
+}
+
+// 3. Formatowanie wyników
+function formatContacts(contactList) {
+  return contactList.map((contact) => {
+    return `${contact.name} — ${contact.phone} — ${contact.email}`;
+  });
+}
+
+// 4. Rozszerzenie własne – wyszukiwanie po fragmencie nazwy
+function searchByName(contactList, searchText) {
+  return contactList.filter((contact) => {
+    return contact.name.toLowerCase().includes(searchText.toLowerCase());
+  });
+}
+
+// kontakty z Katowic
+const katowiceContacts = getContactsByCity(contacts, 'Katowice');
+
+console.log('=== KONTAKTY Z KATOWIC ===');
+console.log(formatContacts(katowiceContacts));
+
+// kontakty ulubione
+const favoriteContacts = getFavoriteContacts(contacts);
+
+console.log('\n=== ULUBIONE KONTAKTY ===');
+console.log(formatContacts(favoriteContacts));
+
+// wyszukiwanie po nazwie
+const searchedContacts = searchByName(contacts, 'ola');
+
+console.log('\n=== WYNIKI WYSZUKIWANIA ===');
+console.log(formatContacts(searchedContacts));
+
+/*
+Komentarz:
+- Poprawiono formatowanie wyników tak, aby wyświetlało również adres email.
+- Użyto filter() do filtrowania kontaktów i map() do budowy czytelnych wpisów.
+- Rozszerzenie własne: wyszukiwanie po fragmencie nazwy oraz dodatkowa cecha email.
+- Największa trudność: zachowanie czytelnego formatu przy większej liczbie danych kontaktowych.
+*/
