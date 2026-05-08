@@ -1,0 +1,57 @@
+const grades = [3.0, 4.0, 5.0, 3.5, 4.5];
+
+// próg zaliczenia
+const passThreshold = 3.0;
+
+// własna cecha danych (rozszerzenie)
+const studentName = 'Kamil';
+
+// funkcja pomocnicza (rozszerzenie)
+function getGradeDescription(avg) {
+  if (avg >= 4.5) {
+    return 'bardzo dobry';
+  } else if (avg >= 4.0) {
+    return 'dobry';
+  } else if (avg >= 3.0) {
+    return 'dostateczny';
+  } else {
+    return 'niedostateczny';
+  }
+}
+
+function calculateStudentResult(gradesArray) {
+  // reduce() – suma ocen
+  const total = gradesArray.reduce((sum, grade) => {
+    return sum + grade;
+  }, 0);
+
+  // średnia + zaokrąglenie do 2 miejsc
+  const average = Number((total / gradesArray.length).toFixed(2));
+
+  // status zaliczenia
+  const status = average >= passThreshold ? 'zaliczone' : 'niezaliczone';
+
+  // zwracany obiekt
+  return {
+    student: studentName,
+    average: average,
+    status: status,
+    description: getGradeDescription(average),
+  };
+}
+
+// wywołanie funkcji
+const result = calculateStudentResult(grades);
+
+// raport
+console.log('=== WYNIK STUDENTA ===');
+console.log(result);
+
+/*
+Komentarz:
+- Średnia ocen liczona jest automatycznie przez reduce().
+- Funkcja zwraca obiekt z pełnym podsumowaniem studenta.
+- Użyto operatora trójargumentowego do określenia statusu zaliczenia.
+- Rozszerzenie własne: dodatkowa cecha studentName oraz funkcja getGradeDescription().
+- Największa trudność: poprawne zaokrąglenie średniej bez utraty działania warunków.
+*/
