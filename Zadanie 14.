@@ -1,0 +1,69 @@
+let todos = [
+  { id: 1, title: 'Oddać projekt', done: false, priority: 'high' },
+  { id: 2, title: 'Przeczytać rozdział', done: true, priority: 'low' },
+  { id: 3, title: 'Przygotować prezentację', done: false, priority: 'medium' },
+];
+
+// funkcja pomocnicza (rozszerzenie)
+function generateId(list) {
+  return list.length > 0 ? Math.max(...list.map((t) => t.id)) + 1 : 1;
+}
+
+// 1. dodawanie zadania (niemutowalnie)
+function addTodo(list, title, priority = 'low') {
+  const newTodo = {
+    id: generateId(list),
+    title,
+    done: false,
+    priority,
+  };
+
+  const updatedList = [...list, newTodo];
+
+  console.log('\nDodano zadanie:');
+  console.log(updatedList);
+
+  return updatedList;
+}
+
+// 2. oznaczanie jako wykonane (map + spread)
+function markAsDone(list, id) {
+  const updatedList = list.map((todo) => {
+    return todo.id === id ? { ...todo, done: true } : todo;
+  });
+
+  console.log(`\nOznaczono zadanie ${id} jako wykonane:`);
+  console.log(updatedList);
+
+  return updatedList;
+}
+
+// 3. filtrowanie niewykonanych
+function getPendingTodos(list) {
+  const pending = list.filter((todo) => !todo.done);
+
+  console.log('\nNiewykonane zadania:');
+  console.log(pending);
+
+  return pending;
+}
+
+// WYWOŁANIA
+
+// dodanie nowego zadania
+todos = addTodo(todos, 'Nauczyć się JS');
+
+// oznaczenie zadania jako wykonane
+todos = markAsDone(todos, 1);
+
+// lista niewykonanych
+const pending = getPendingTodos(todos);
+
+/*
+Komentarz:
+- Dodawanie, aktualizacja i filtrowanie są w osobnych funkcjach.
+- map() + spread użyte do niemutowalnej zmiany statusu.
+- filter() wybiera tylko niewykonane zadania.
+- Rozszerzenie własne: priority oraz automatyczne generowanie id.
+- Największa trudność: zachowanie spójności listy po kilku operacjach bez mutacji oryginału.
+*/
