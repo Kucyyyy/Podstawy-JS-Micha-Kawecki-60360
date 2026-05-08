@@ -1,0 +1,92 @@
+const schedule = [
+  {
+    day: 'poniedziałek',
+    subject: 'Programowanie',
+    room: 'A12',
+    online: false,
+    lecturer: 'Kowalski',
+  },
+  {
+    day: 'wtorek',
+    subject: 'Bazy danych',
+    room: 'online',
+    online: true,
+    lecturer: 'Nowak',
+  },
+  {
+    day: 'czwartek',
+    subject: 'Grafika',
+    room: 'B03',
+    online: false,
+    lecturer: 'Wiśniewski',
+  },
+  {
+    day: 'piątek',
+    subject: 'UX',
+    room: 'online',
+    online: true,
+    lecturer: 'Zielińska',
+  },
+];
+
+// funkcja pomocnicza
+function formatLesson(item) {
+  const mode = item.online ? 'online' : 'stacjonarne';
+  const place = item.online ? 'platforma online' : `sala ${item.room}`;
+
+  return `${item.subject} — ${place} — ${mode} — prowadzący: ${item.lecturer}`;
+}
+
+// funkcja filtrowania po dniu
+function getClassesByDay(list, day) {
+  return list.filter((item) => item.day === day);
+}
+
+// formatowanie listy
+function formatDaySchedule(list) {
+  return list.map((item) => formatLesson(item));
+}
+
+// liczba wszystkich zajęć
+function countAllClasses(list) {
+  return list.length;
+}
+
+// filtr po trybie (rozszerzenie)
+function getByMode(list, mode) {
+  return list.filter((item) => {
+    return mode === 'online' ? item.online : !item.online;
+  });
+}
+
+// 👉 INPUT od użytkownika
+const selectedDay = prompt('Podaj dzień tygodnia (np. wtorek):').toLowerCase();
+
+// przetwarzanie danych
+const dayClasses = getClassesByDay(schedule, selectedDay);
+
+console.log(`\n=== ZAJĘCIA: ${selectedDay.toUpperCase()} ===`);
+
+if (dayClasses.length > 0) {
+  console.log(formatDaySchedule(dayClasses));
+} else {
+  console.log('Brak zajęć w wybranym dniu.');
+}
+
+console.log('\n=== LICZBA WSZYSTKICH ZAJĘĆ ===');
+console.log(countAllClasses(schedule));
+
+console.log('\n=== TYLKO ZAJĘCIA ONLINE ===');
+console.log(formatDaySchedule(getByMode(schedule, 'online')));
+
+console.log('\n=== TYLKO ZAJĘCIA STACJONARNE ===');
+console.log(formatDaySchedule(getByMode(schedule, 'offline')));
+
+/*
+Komentarz:
+- filter() użyty do wyboru zajęć po dniu i trybie.
+- map() użyty do budowy czytelnych opisów zajęć.
+- Dodana logika warunkowa określająca tryb (online / stacjonarne).
+- Rozszerzenie własne: możliwość filtrowania po trybie + dodatkowa cecha lecturer.
+- Największa trudność: ujednolicenie opisu zajęć niezależnie od trybu.
+*/
