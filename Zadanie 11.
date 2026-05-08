@@ -1,0 +1,82 @@
+const tripCosts = [
+  { label: 'nocleg', amount: 420, paidBy: 'Anna', category: 'hotel' },
+  { label: 'paliwo', amount: 260, paidBy: 'Piotr', category: 'transport' },
+  { label: 'jedzenie', amount: 180, paidBy: 'Anna', category: 'food' },
+  { label: 'bilety', amount: 140, paidBy: 'Ola', category: 'tickets' },
+];
+
+// funkcja pomocnicza (rozszerzenie)
+function formatMoney(value) {
+  return `${value.toFixed(2)} zł`;
+}
+
+// 1. Całkowity koszt wyjazdu
+const totalCost = tripCosts.reduce((sum, item) => {
+  return sum + item.amount;
+}, 0);
+
+// 2. Agregacja wydatków per osoba
+const costsPerPerson = tripCosts.reduce((acc, item) => {
+  // jeśli osoby jeszcze nie ma w obiekcie
+  if (!acc[item.paidBy]) {
+    acc[item.paidBy] = 0;
+  }
+
+  acc[item.paidBy] += item.amount;
+
+  return acc;
+}, {});
+
+console.log('Wydatki per osoba:');
+console.log(costsPerPerson);
+
+// 3. Wskazanie osoby, która zapłaciła najwięcej
+const topPayer = Object.entries(costsPerPerson).reduce((max, current) => {
+  return current[1] > max[1] ? current : max;
+});
+
+// 4. Równy podział kosztów (rozszerzenie)
+const peopleCount = Object.keys(costsPerPerson).length;
+const equalShare = totalCost / peopleCount;
+
+// obliczenie bilansu
+const balances = {};
+
+for (const person in costsPerPerson) {
+  balances[person] = Number((costsPerPerson[person] - equalShare).toFixed(2));
+}
+
+// 5. Raport końcowy
+console.log('\n=== RAPORT WYJAZDU ===');
+
+console.log(`\nCałkowity koszt: ${formatMoney(totalCost)}`);
+
+console.log('\nRozbicie kosztów:');
+
+for (const person in costsPerPerson) {
+  console.log(`${person}: ${formatMoney(costsPerPerson[person])}`);
+}
+
+console.log(
+  `\nNajwięcej zapłacił(a): ${topPayer[0]} (${formatMoney(topPayer[1])})`,
+);
+
+console.log('\nBilans po równym podziale:');
+
+for (const person in balances) {
+  const message =
+    balances[person] > 0
+      ? `powinien otrzymać ${formatMoney(balances[person])}`
+      : `powinien oddać ${formatMoney(Math.abs(balances[person]))}`;
+
+  console.log(`${person}: ${message}`);
+}
+
+/*
+Komentarz:
+- reduce() użyty do policzenia całkowitego kosztu i agregacji wydatków osób.
+- Program działa dla dowolnej liczby wpisów w tablicy.
+- Rozszerzenie własne: kategoria wydatku oraz bilans zwrotów po równym podziale.
+- Dodana funkcja formatMoney() dla czytelniejszego raportu.
+- Największa trudność: poprawne wyliczenie różnic między wydatkiem osoby a równym udziałem.
+*/
