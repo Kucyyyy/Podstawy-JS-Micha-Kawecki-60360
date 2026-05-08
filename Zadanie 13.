@@ -1,0 +1,65 @@
+const API_BASE =
+  "https://api.open-meteo.com/v1/forecast";
+
+// własne rozszerzenie: domyślne miasto (Katowice)
+const defaultLocation = {
+  latitude: 50.29,
+  longitude: 19.10,
+  name: "Katowice"
+};
+
+// funkcja pomocnicza (rozszerzenie)
+function formatWeather(value, unit) {
+  return `${value} ${unit}`;
+}
+
+async function getWeather(latitude, longitude, placeName = "wybrana lokalizacja") {
+  try {
+    const url =
+      `${API_BASE}?latitude=${latitude}` +
+      `&longitude=${longitude}` +
+      `&current=temperature_2m,wind_speed_10m`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const temperature = data.current.temperature_2m;
+    const windSpeed = data.current.wind_speed_10m;
+
+    console.log(`\n=== POGODA: ${placeName} ===`);
+    console.log("Temperatura:", formatWeather(temperature, "°C"));
+    console.log("Wiatr:", formatWeather(windSpeed, "km/h"));
+
+    // dodatkowy warunek (rozszerzenie)
+    if (temperature > 25) {
+      console.log("⚠️ Upał – zalecane nawodnienie!");
+    } else if (temperature < 5) {
+      console.log("⚠️ Bardzo zimno – ubierz się ciepło!");
+    }
+
+  } catch (error) {
+    console.log("❌ Błąd pobierania danych pogodowych:", error.message);
+  }
+}
+
+// WYWOŁANIA
+
+// domyślna lokalizacja
+getWeather(
+  defaultLocation.latitude,
+  defaultLocation.longitude,
+  defaultLocation.name
+);
+
+// inna lokalizacja (przykład)
+getWeather(52.23, 21.01, "Warszawa");
+
+/*
+Komentarz:
+- użyto fetch() do pobrania danych z API
+- użyto async/await do obsługi zapytania
+- try...catch obsługuje błędy połączenia
+- wyświetlane są temperatura i prędkość wiatru z JSON
+- rozszerzenie: możliwość zmiany współrzędnych + domyślna lokalizacja + komunikaty pogodowe
+- najtrudniejsze: poprawne dopasowanie struktury danych z API (data.current)
+*/
